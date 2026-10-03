@@ -1,0 +1,799 @@
+/* ==========================================================================
+   Vipunen / CampusConnect – yhteinen tyylitiedosto (sivu1, sivu2, sivu3)
+
+   Sisältö:
+   1. Värit ja fontit (design tokenit)
+   2. Perusasetukset
+   3. Sivun runko: yläpalkki, sisältö, alapalkki
+   4. Yhteiset osat: ikonit, tekstit, painikkeet, pillerit
+   5. Etusivu (sivu1)
+   6. Tapahtumat (sivu2)
+   7. Kurssit (sivu3)
+
+   Teemat: etusivu käyttää oletusarvoja (Plus Jakarta Sans), sivut 2 ja 3
+   käyttävät <body class="theme-content"> (Encode Sans Semi Expanded).
+   Fontit lataa kukin sivu omasta <link>-tagistaan.
+   ========================================================================== */
+
+
+/* 1. VÄRIT JA FONTIT
+   -------------------------------------------------------------------------- */
+
+:root {
+  --font: "Plus Jakarta Sans";
+
+  /* Pinnat */
+  --surface: #fcf9f3;
+  --card: #ffffff;
+  --surface-muted: #f0eee8;
+  --surface-soft: #f6f3ed;
+  --surface-strong: #ece7df;
+  --surface-stronger: #e3ddd4;
+  --surface-variant: #ebdccb;
+
+  /* Tekstit */
+  --text: #1c1c18;
+  --text-muted: #4c463e;
+  --text-inverse: #ffffff;
+
+  /* Aksentit */
+  --sand: #f0ddc5;
+  --brown: #784315;
+  --accent: #895122;
+  --accent-light: #feb37c;
+  --warm: #984800;
+  --warm-container: #ffd8c2;
+  --on-warm-container: #f07a1a;
+  --green: #48a65e;
+  --inverse: #31312d;
+
+  /* Yläpalkki */
+  --header-alpha: 85%;
+  --header-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
+  --logo-border: none;
+
+  /* Yleiset */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Sivut 2 ja 3 */
+.theme-content {
+  --font: "Encode Sans Semi Expanded", sans-serif;
+  --surface: #f5f2ec;
+  --surface-soft: #faf7f2;
+  --accent: #784315;
+  --warm: #f07a1a;
+  --header-alpha: 90%;
+  --header-shadow: 0 2px 12px rgba(120, 67, 21, 0.06);
+  --logo-border: 1px solid var(--sand);
+}
+
+
+/* 2. PERUSASETUKSET
+   -------------------------------------------------------------------------- */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  border: 0 solid;
+}
+
+html {
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
+html, body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+  font-weight: 400;
+  overscroll-behavior-y: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, p { margin: 0; }
+
+h1 { font-size: 22px; line-height: 28px; letter-spacing: -0.01em; font-weight: 600; }
+h2, h3 { font-size: 18px; line-height: 24px; letter-spacing: -0.005em; font-weight: 600; }
+
+a { color: inherit; text-decoration: inherit; }
+
+img { display: block; max-width: 100%; height: auto; }
+
+::-webkit-scrollbar { display: none; }
+
+
+/* 3. SIVUN RUNKO
+   -------------------------------------------------------------------------- */
+
+/* Yläpalkki */
+.app-header {
+  position: fixed;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  padding-top: env(safe-area-inset-top, 0px);
+  background: color-mix(in srgb, var(--surface) var(--header-alpha), transparent);
+  box-shadow: var(--header-shadow);
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+}
+
+.app-header__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 4rem;
+  padding: 0 1rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.brand__logo {
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: var(--logo-border);
+  border-radius: 9999px;
+  object-fit: cover;
+  box-shadow: var(--shadow-sm);
+}
+
+.brand__text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand__name {
+  color: var(--accent);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.brand__title {
+  font-size: 18px;
+  letter-spacing: -0.005em;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.app-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* "Etusivu"-teksti näkyy vain etusivun yläpalkissa, ja vain leveämmillä näytöillä */
+.app-header__page {
+  display: none;
+  color: var(--text-muted);
+}
+
+@media (min-width: 640px) {
+  .app-header__page { display: inline-block; }
+}
+
+.avatar-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0.25rem;
+  border-radius: 9999px;
+  transition: background-color 0.15s var(--ease);
+}
+
+.avatar-link:hover { background: var(--surface-muted); }
+
+.avatar-link img {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  object-fit: cover;
+}
+
+.theme-content .avatar-link {
+  transition: all 0.15s var(--ease);
+}
+
+.theme-content .avatar-link:hover { background: color-mix(in srgb, var(--sand) 40%, transparent); }
+.theme-content .avatar-link:active { transform: scale(0.95); }
+
+.theme-content .avatar-link img {
+  width: 2.25rem;
+  height: 2.25rem;
+  box-shadow: 0 0 0 2px var(--green), var(--shadow-sm);
+}
+
+/* Sisältöalue */
+.app-main {
+  position: relative;
+  display: flex;
+  flex: 1 1 0%;
+  flex-direction: column;
+  width: 100%;
+  padding: 4rem 1rem 6rem;
+  background: var(--surface);
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+/* Tapahtumasivulla sisällön alla on lisätila */
+.page--padded { padding-bottom: 1.5rem; }
+
+/* Alapalkki */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  z-index: 50;
+  width: 100%;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  box-shadow: 0 -2px 12px rgba(120, 67, 21, 0.06);
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+}
+
+.bottom-nav__list {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 4rem;
+  padding: 0 0.25rem;
+}
+
+.bottom-nav__link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.125rem;
+  min-width: 56px;
+  min-height: 48px;
+  color: var(--text-muted);
+  transition: color 0.15s var(--ease);
+}
+
+.bottom-nav__link:hover { color: var(--text); }
+
+.bottom-nav__link.is-active { color: var(--accent); }
+
+
+/* 4. YHTEISET OSAT
+   -------------------------------------------------------------------------- */
+
+/* Ikonit (Material Symbols) */
+.icon-18 { font-size: 18px; }
+.icon-20 { font-size: 20px; }
+.icon-22 { font-size: 22px; }
+.icon-24 { font-size: 24px; }
+.icon-filled { font-variation-settings: 'FILL' 1; }
+
+/* Pieni teksti */
+.caption {
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.02em;
+  font-weight: 500;
+}
+
+/* Pieni isoilla kirjaimilla kirjoitettu otsikkoteksti */
+.eyebrow {
+  color: var(--accent);
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Valkoinen kortti (kurssit, tapahtumat) */
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background: var(--card);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Pyöreä tagi (otsikon vieressä) */
+.badge {
+  padding: 0.25rem 0.625rem;
+  background: var(--surface-soft);
+  border-radius: 9999px;
+  color: var(--text-muted);
+}
+
+/* Vihreä tai oranssi tilatieto pienen pisteen kanssa */
+.status {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-weight: 500;
+}
+
+.status--green { color: var(--green); }
+.status--warm { color: var(--warm); }
+
+.dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: var(--green);
+}
+
+.status .dot {
+  width: 0.375rem;
+  height: 0.375rem;
+  background: currentColor;
+}
+
+/* "Takaisin päävalikkoon" */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0;
+  color: var(--accent);
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.02em;
+  font-weight: 600;
+  transition: all 0.15s var(--ease);
+}
+
+.back-link:hover { text-decoration: underline; }
+.back-link:active { transform: scale(0.95); }
+
+/* Pienempi, kevyempi versio (kurssit) */
+.back-link--compact {
+  gap: 0.375rem;
+  margin-left: -0.25rem;
+  font-size: 14px;
+  line-height: inherit;
+  letter-spacing: inherit;
+  font-weight: 500;
+  transition: color 0.15s var(--ease);
+}
+
+.back-link--compact:active { transform: none; }
+
+.page-back { padding-top: 0.25rem; }
+
+
+/* 5. ETUSIVU
+   -------------------------------------------------------------------------- */
+
+.greeting {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.25rem;
+}
+
+.greeting__text {
+  display: flex;
+  flex-direction: column;
+}
+
+.greeting__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--accent-light) 30%, transparent);
+  color: var(--accent);
+}
+
+.hero {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--sand);
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 16px rgba(120, 67, 21, 0.06);
+  color: var(--brown);
+}
+
+.hero__icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--card) 80%, transparent);
+  box-shadow: var(--shadow-sm);
+}
+
+.hero__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.hero__text {
+  color: color-mix(in srgb, var(--brown) 90%, transparent);
+  line-height: 1.625;
+}
+
+.hero__status {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.25rem;
+  font-weight: 600;
+}
+
+.services {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.services__title { padding: 0 0.25rem; }
+
+.service-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--card);
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 16px rgba(120, 67, 21, 0.05);
+  transition: transform 0.15s var(--ease);
+}
+
+.service-card:active { transform: scale(0.99); }
+
+.service-card__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.service-card__heading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.service-card__icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  background: var(--surface-muted);
+}
+
+.service-card__icon--green { color: var(--green); }
+.service-card__icon--warm { color: var(--warm); }
+
+.service-card__image {
+  position: relative;
+  width: 100%;
+  height: 6rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.service-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.service-card__image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, color-mix(in srgb, var(--inverse) 40%, transparent), transparent);
+}
+
+.service-card__text { color: var(--text-muted); }
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 3rem;
+  padding: 0 1rem;
+  background: var(--brown);
+  border-radius: 9999px;
+  box-shadow: var(--shadow-sm);
+  color: var(--text-inverse);
+  transition: background-color 0.15s var(--ease);
+}
+
+.button:hover { background: var(--accent); }
+.button:active { opacity: 0.95; }
+
+
+/* 6. TAPAHTUMAT (sivu2)
+   -------------------------------------------------------------------------- */
+
+.page-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding-top: 0.25rem;
+}
+
+.page-intro__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.page-intro__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 9999px;
+  background: var(--sand);
+  color: var(--accent);
+}
+
+.page-intro p { color: var(--text-muted); }
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.list__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.list__count { color: var(--text-muted); }
+
+.event-card { gap: 0.5rem; transition: all 0.15s var(--ease); }
+
+.event-card__header {
+  display: flex;
+  flex-direction: column;
+}
+
+.event-card__tags {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.tag {
+  padding: 0.125rem 0.625rem;
+  border-radius: 0.5rem;
+}
+
+/* Ensimmäinen tagi on luokka, toinen lisätieto */
+.tag--category { font-weight: 600; }
+
+/* Värit. Ilman modifieria tagilla ei ole taustaa (näin se oli alkuperäisessä). */
+.tag--sand { background: var(--sand); color: var(--brown); }
+.tag--grey { background: var(--surface-strong); color: var(--text-muted); }
+.tag--stone { background: var(--surface-stronger); color: var(--text); }
+
+.event-card__details {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 0.25rem;
+  padding-top: 0.25rem;
+  color: var(--text-muted);
+}
+
+.detail {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.detail .material-symbols-outlined { color: var(--accent); }
+.event-card--social .detail .material-symbols-outlined { color: var(--warm); }
+
+.event-card__text {
+  padding-top: 0.25rem;
+  color: var(--text-muted);
+}
+
+
+/* 7. KURSSIT (sivu3)
+   -------------------------------------------------------------------------- */
+
+.page-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.page-header__title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.badge--season {
+  padding: 0.25rem 0.75rem;
+  background: var(--surface-strong);
+  color: var(--accent);
+}
+
+.page-header__summary {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: var(--text-muted);
+}
+
+.course-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.course-card {
+  gap: 0.875rem;
+  transition: all 0.15s var(--ease);
+}
+
+.course-card:hover {
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.course-card__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.course-card__main {
+  flex: 1 1 0%;
+  min-width: 0;
+}
+
+.course-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.course-card h2 { line-height: 1.25; }
+
+.course-card__credits {
+  color: var(--text-muted);
+}
+
+.course-card__icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.75rem;
+}
+
+.course-card__icon--warm  { background: color-mix(in srgb, var(--warm-container) 60%, transparent); color: var(--on-warm-container); }
+.course-card__icon--sand  { background: color-mix(in srgb, var(--sand) 70%, transparent); color: var(--accent); }
+.course-card__icon--grey  { background: color-mix(in srgb, var(--surface-variant) 80%, transparent); color: var(--text-muted); }
+
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.125rem 0.5rem;
+  background: var(--green);
+  border-radius: 9999px;
+  color: var(--text-inverse);
+  font-size: 11px;
+  line-height: 24px;
+  letter-spacing: 0.025em;
+  font-weight: 600;
+}
+
+.status-chip::before {
+  content: "";
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 9999px;
+  background: #ffffff;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  50% { opacity: 0.5; }
+}
+
+.course-card__info {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 0.5rem;
+  padding-top: 0.25rem;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.5rem;
+  background: var(--surface-soft);
+  border-radius: 0.5rem;
+}
+
+.info-row--alert { background: color-mix(in srgb, var(--warm-container) 30%, transparent); }
+
+.info-row .material-symbols-outlined {
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
+.info-row--alert .material-symbols-outlined { color: var(--warm); }
+
+.info-row__body {
+  flex: 1 1 0%;
+  min-width: 0;
+}
+
+.info-row__label {
+  color: var(--text-muted);
+  line-height: 1;
+}
+
+.info-row--alert .info-row__label {
+  color: var(--warm);
+  font-weight: 600;
+}
+
+.info-row__value {
+  margin-top: 0.125rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 16px;
+  line-height: 1.25;
+  font-weight: 500;
+}
